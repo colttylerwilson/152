@@ -110,10 +110,13 @@ public class ExprNode {
 		while (operatorStack.size() >= 1) {
 			System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 			String operator = (String) operatorStack.pop();
+			System.out.println("Operator: " + operator);
 			ExprNode e2 = new ExprNode();
 			e2 = (ExprNode) exprStack.pop();
+			System.out.println("Operator 2: " + e2);
 			ExprNode e1 = new ExprNode();
 			e1 = (ExprNode) exprStack.pop();
+			System.out.println("Operator 1: " + e1);
 			System.out.println("Pushing " + operator + e1.c + e2.c + " to exprStack");
 			exprStack.push(new ExprNode(operator, e1, e2));
 		}
@@ -147,13 +150,25 @@ public class ExprNode {
 			return d;
 		} else {
 			if (e.c.equals("+"))
+			{
 				return getFinal(e.operand2) + getFinal(e.operand1);
+			}
 			else if (e.c.equals("-"))
+			{
 				return getFinal(e.operand2) - getFinal(e.operand1);
+			}
 			else if (e.c.equals("*"))
+			{
 				return getFinal(e.operand2) * getFinal(e.operand1);
+			}
+			else if (e.c.equals("/"))
+			{
+				return getFinal(e.operand2) / getFinal(e.operand1);
+			}
 			else
-				return getFinal(e.operand1) / getFinal(e.operand2);
+			{
+				return 0;
+			}
 		}
 	}
 }
