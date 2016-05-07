@@ -43,7 +43,6 @@ public class ExprNode {
 			return 1;
 		else if (c.equals("*") || c.equals("/"))
 			return 2;
-		System.out.println("Returning 0 when: c = " + c);
 		return 0;
 	}
 
@@ -92,12 +91,15 @@ public class ExprNode {
 				while (!((String)operatorStack.peek()).equals("(")) {
 					System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 					String operator = (String) operatorStack.pop();
+					System.out.println("Creating String with value " + operator);
 					ExprNode e2 = new ExprNode();
 					e2 = (ExprNode) exprStack.pop();
+					System.out.println("Creating node with value " + e2.c);
 					ExprNode e1 = new ExprNode();
 					e1 = (ExprNode) exprStack.pop();
+					System.out.println("Creating node with value " + e1.c);
 					System.out.println("Pushing " + operator + e1.c + e2.c + " to exprStack");
-					exprStack.push(new ExprNode(operator, e1, e2));
+					exprStack.push(new ExprNode(operator, e2, e1));
 				}
 				System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 				operatorStack.pop();
