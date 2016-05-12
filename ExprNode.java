@@ -97,40 +97,28 @@ public class ExprNode {
 							break;
 						}
 					}
-					System.out.println("Pushing " + c + " to operatorStack");
 					operatorStack.push(c);
 				}
 			} else if (c.equals(")")) {
 				while (!((String) operatorStack.peek()).equals("(")) {
-					System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 					String operator = (String) operatorStack.pop();
-					System.out.println("Creating String with value " + operator);
 					ExprNode e2 = new ExprNode();
 					e2 = (ExprNode) exprStack.pop();
-					System.out.println("Creating node with value " + e2.c);
 					ExprNode e1 = new ExprNode();
 					e1 = (ExprNode) exprStack.pop();
-					System.out.println("Creating node with value " + e1.c);
-					System.out.println("Pushing " + operator + e1.c + e2.c + " to exprStack");
 					exprStack.push(new ExprNode(operator, e2, e1));
 				}
-				System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 				operatorStack.pop();
 			} else {
 				throw new StackError("Problem with dat stack of $$$");
 			}
 		}
 		while (operatorStack.size() >= 1) {
-			System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 			String operator = (String) operatorStack.pop();
-			System.out.println("Operator: " + operator);
 			ExprNode e2 = new ExprNode();
 			e2 = (ExprNode) exprStack.pop();
-			System.out.println("Operator 2: " + e2);
 			ExprNode e1 = new ExprNode();
 			e1 = (ExprNode) exprStack.pop();
-			System.out.println("Operator 1: " + e1);
-			System.out.println("Pushing " + operator + e1.c + e2.c + " to exprStack");
 			exprStack.push(new ExprNode(operator, e2, e1));
 		}
 		return (ExprNode) exprStack.pop();
