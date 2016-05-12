@@ -5,7 +5,7 @@ public class StackIt {
 	
 	public static void main(String [] args) throws StackError
 	{
-		String input = "(1/2)+2";
+		String input = "1/2+2*2";
 		ExprNode e = new ExprNode();
 		ExprNode d = e.parse(input);
 		e.printTree(d);
