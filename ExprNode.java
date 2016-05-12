@@ -76,6 +76,9 @@ public class ExprNode {
 				}
 				x.c = x.c + c;
 				exprStack.push(x);
+			} else if (Character.isLetter(c.charAt(0))) {
+				System.out.println("Pushing " + Assignments.getAssignment(c) + " to exprStack");
+				exprStack.push(new ExprNode(Assignments.getAssignment(c)));
 			} else if (isInteger(c)) {
 				while (input.length() - i >= 2 && isInteger(input.substring(i + 1, i + 2))) {
 					c = c + input.substring(i + 1, i + 2);
@@ -127,8 +130,6 @@ public class ExprNode {
 				throw new StackError("Problem with dat stack of $$$");
 			}
 		}
-		// Keeping exprStack.size() >= 1 in case you would like to square a
-		// variable by using A*
 		while (operatorStack.size() >= 1) {
 			System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 			String operator = (String) operatorStack.pop();
@@ -140,7 +141,7 @@ public class ExprNode {
 			e1 = (ExprNode) exprStack.pop();
 			System.out.println("Operator 1: " + e1);
 			System.out.println("Pushing " + operator + e1.c + e2.c + " to exprStack");
-			exprStack.push(new ExprNode(operator, e1, e2));
+			exprStack.push(new ExprNode(operator, e2, e1));
 		}
 		return (ExprNode) exprStack.pop();
 	}

@@ -5,8 +5,11 @@ public class StackIt {
 	
 	public static void main(String [] args) throws StackError
 	{
-		Assignments a  = new Assignments();
-		a.Run();
+		Assignments.testMap.put("a", "12");
+		String input = "2-1-1";
+		ExprNode e = new ExprNode();
+		ExprNode d = e.parse(input);
+		System.out.println("Final: " + e.getFinal(d));
 		/*
 		String input1 = "2+2";
 		String input2 = "1+1";
