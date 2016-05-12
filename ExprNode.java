@@ -34,6 +34,15 @@ public class ExprNode {
 		return false;
 	}
 
+	public boolean isInteger(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (NumberFormatException nfe) {
+		}
+		return false;
+	}
+
 	public boolean isNumeric(String s) {
 		return s.matches("[-+]?\\d*\\.?\\d+");
 	}
@@ -54,12 +63,23 @@ public class ExprNode {
 			if (c.equals("(")) {
 				System.out.println("Pushing " + c + " to operatorStack");
 				operatorStack.push(c);
-			} else if (isNumeric(c)) {
-				if (input.length() - i > 2) {
-					while (isNumeric(input.substring(i + 1, i + 2))) {
-						c = c + input.substring(i + 1, i + 2);
-						i++;
-					}
+			} else if (c.equals(".")) {
+				ExprNode x = new ExprNode();
+				if (exprStack.isEmpty()) {
+					System.out.println("Problems");
+					System.exit(0);
+				}
+				x = (ExprNode) exprStack.pop();
+				while (input.length() - i >= 2 && isInteger(input.substring(i + 1, i + 2))) {
+					c = c + input.substring(i + 1, i + 2);
+					i++;
+				}
+				x.c = x.c + c;
+				exprStack.push(x);
+			} else if (isInteger(c)) {
+				while (input.length() - i >= 2 && isInteger(input.substring(i + 1, i + 2))) {
+					c = c + input.substring(i + 1, i + 2);
+					i++;
 				}
 				System.out.println("Pushing " + c + " to exprStack");
 				exprStack.push(new ExprNode(c));
@@ -88,7 +108,7 @@ public class ExprNode {
 					operatorStack.push(c);
 				}
 			} else if (c.equals(")")) {
-				while (!((String)operatorStack.peek()).equals("(")) {
+				while (!((String) operatorStack.peek()).equals("(")) {
 					System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 					String operator = (String) operatorStack.pop();
 					System.out.println("Creating String with value " + operator);
@@ -151,24 +171,15 @@ public class ExprNode {
 			double d = Double.parseDouble(e.c);
 			return d;
 		} else {
-			if (e.c.equals("+"))
-			{
+			if (e.c.equals("+")) {
 				return getFinal(e.operand2) + getFinal(e.operand1);
-			}
-			else if (e.c.equals("-"))
-			{
+			} else if (e.c.equals("-")) {
 				return getFinal(e.operand2) - getFinal(e.operand1);
-			}
-			else if (e.c.equals("*"))
-			{
+			} else if (e.c.equals("*")) {
 				return getFinal(e.operand2) * getFinal(e.operand1);
-			}
-			else if (e.c.equals("/"))
-			{
+			} else if (e.c.equals("/")) {
 				return getFinal(e.operand2) / getFinal(e.operand1);
-			}
-			else
-			{
+			} else {
 				return 0;
 			}
 		}

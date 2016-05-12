@@ -5,11 +5,19 @@ public class StackIt {
 	
 	public static void main(String [] args) throws StackError
 	{
-		String input = "1/2+2*2";
+		Assignments a  = new Assignments();
+		a.Run();
+		/*
+		String input1 = "2+2";
+		String input2 = "1+1";
 		ExprNode e = new ExprNode();
-		ExprNode d = e.parse(input);
-		e.printTree(d);
-		System.out.println("Final " + e.getFinal(d));
+		ExprNode d = e.parse(input1);
+		ExprNode t = e.parse(input2);
+		String input3 = e.getFinal(d) + "+" + e.getFinal(t);
+		System.out.println(input3);
+		ExprNode dt = e.parse(input3);
+		System.out.println("Final: " + e.getFinal(dt));
+		*/
 	}
 		
 }
