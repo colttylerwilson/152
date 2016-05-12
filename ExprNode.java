@@ -59,9 +59,7 @@ public class ExprNode {
 		String c;
 		for (int i = 0; i < input.length(); i++) {
 			c = input.substring(i, i + 1);
-			System.out.println("String " + c);
 			if (c.equals("(")) {
-				System.out.println("Pushing " + c + " to operatorStack");
 				operatorStack.push(c);
 			} else if (c.equals(".")) {
 				ExprNode x = new ExprNode();
@@ -77,31 +75,23 @@ public class ExprNode {
 				x.c = x.c + c;
 				exprStack.push(x);
 			} else if (Character.isLetter(c.charAt(0))) {
-				System.out.println("Pushing " + Assignments.getAssignment(c) + " to exprStack");
 				exprStack.push(new ExprNode(Assignments.getAssignment(c)));
 			} else if (isInteger(c)) {
 				while (input.length() - i >= 2 && isInteger(input.substring(i + 1, i + 2))) {
 					c = c + input.substring(i + 1, i + 2);
 					i++;
 				}
-				System.out.println("Pushing " + c + " to exprStack");
 				exprStack.push(new ExprNode(c));
 			} else if (isOperator(c)) {
 				if (operatorStack.isEmpty()) {
-					System.out.println("Pushing " + c + " to operatorStack");
 					operatorStack.push(c);
 				} else {
 					while (precedence((String) operatorStack.peek()) >= precedence(c)) {
-						System.out.println("Popping " + (String) operatorStack.peek() + " from operatorStack");
 						String operator = (String) operatorStack.pop();
-						System.out.println("Creating String with value " + operator);
 						ExprNode e2 = new ExprNode();
 						e2 = (ExprNode) exprStack.pop();
-						System.out.println("Creating node with value " + e2.c);
 						ExprNode e1 = new ExprNode();
 						e1 = (ExprNode) exprStack.pop();
-						System.out.println("Creating node with value " + e1.c);
-						System.out.println("Pushing " + operator + e1.c + e2.c + " to exprStack");
 						exprStack.push(new ExprNode(operator, e2, e1));
 						if (operatorStack.isEmpty()) {
 							break;
